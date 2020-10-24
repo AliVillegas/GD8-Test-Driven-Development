@@ -115,33 +115,49 @@ describe(' Tests for BankAccount ', () => {
         })
     })
     describe('Append Test', () => {
-        let bankAccount = new BankAccount(balance)
-        it('Final Balance', () => {
-            let b1 = 100;
-            let b2 = -100;
-            let b3 = null;
+        it('Received positive balance', () => {
+            let bankAccount = new BankAccount(balance)
+            let b1 = 100
             assert.deepStrictEqual(200, bankAccount.append(b1))
-            assert.deepStrictEqual(100, bankAccount.append(b2))
-            assert.deepStrictEqual(100, bankAccount.append(b3))
+        })
+        it('Received Negative Balance', () => {
+            let bankAccount = new BankAccount(balance)
+            let b1 = -100
+            assert.deepStrictEqual(100, bankAccount.append(b1))
+        })
+        it('Received not a number Balance', () => {
+            let bankAccount = new BankAccount(balance)
+            let b1 = null
+            assert.deepStrictEqual(100, bankAccount.append(b1))
         })
     })
     describe('Substract Test', () => {
-        let bankAccount = new BankAccount(balance)
-        it('Retired Amount', () => {
-            let b1 = 100;
-            let b2 = -100;
-            let b3 = null;
+        it('Receive positive balance', () => {
+            let bankAccount = new BankAccount(balance)
+            let b1 = 100
             assert.deepStrictEqual(0, bankAccount.substract(b1))
-            assert.deepStrictEqual(100, bankAccount.substract(b2))
-            assert.deepStrictEqual(100, bankAccount.substract(b3))
+        })
+        it('Received Negative Balance', () => {
+            let bankAccount = new BankAccount(balance)
+            let b1 = -100
+            assert.deepStrictEqual(100, bankAccount.substract(b1))
+        })
+        it('Received not a number Balance', () => {
+            let bankAccount = new BankAccount(balance)
+            let b1 = null
+            assert.deepStrictEqual(100, bankAccount.substract(b1))
         })
     })
     describe('Merge Test', () => {
         let bankAccount1 = new BankAccount(balance)
         let bankAccount2 = new BankAccount(balance)
         it('Correct Merge', () => {
-        
-            assert.deepStrictEqual(200, bankAccount1.merge(bankAccount1,bankAccount2))
+            assert.deepStrictEqual(200, bankAccount1.merge(bankAccount2))
+        })
+        it('Received something different than BankAccouint', () => {
+            assert.deepStrictEqual(200, bankAccount1.merge(null))
+            assert.deepStrictEqual(200, bankAccount1.merge({ x: 100, y: 200 }))
+            assert.deepStrictEqual(200, bankAccount1.merge("bank account"))
         })
     })
     describe('History Test', () => {
@@ -150,7 +166,7 @@ describe(' Tests for BankAccount ', () => {
             bankAccount.append(30)
             bankAccount.append(80)
             bankAccount.substract(50)
-            assert.deepStrictEqual(["+30","+80","-50"], bankAccount.history())
+            assert.deepStrictEqual(["+30", "+80", "-50"], bankAccount.history())
         })
         it('Correct History After Merge', () => {
             let bankAccount1 = new BankAccount(balance)
@@ -161,8 +177,9 @@ describe(' Tests for BankAccount ', () => {
             bankAccount2.append(30)
             bankAccount2.append(80)
             bankAccount2.substract(50)
+
             bankAccount1.merge(bankAccount2)
-            assert.deepStrictEqual(["+30","+80","-50","+30","+80","-50"], bankAccount1.history())
+            assert.deepStrictEqual(["+30", "+80", "-50", "+30", "+80", "-50"], bankAccount1.history())
         })
 
     })
