@@ -1,6 +1,7 @@
 // import { VectorCalculator } from '../Classes/VectorCalculator.js'
 const assert = require('assert')
 const VectorCalculator = require('../Classes/VectorCalculator')
+const BankAccount = require('../Classes/BankAccount')
 
 describe(' Tests for VectorCalculator ', () => {
     let vectorCalculator = new VectorCalculator()
@@ -101,6 +102,69 @@ describe(' Tests for VectorCalculator ', () => {
             assert.deepStrictEqual(null, vectorCalculator.dot(v1, v2))
             assert.deepStrictEqual(null, vectorCalculator.dot(v2, v1))
         })
+    })
+
+})
+
+describe(' Tests for BankAccount ', () => {
+    let balance = 100
+    describe('Current Amount', () => {
+        let bankAccount = new BankAccount(balance)
+        it('Current Value', () => {
+            assert.deepStrictEqual(100, bankAccount.current())
+        })
+    })
+    describe('Append Test', () => {
+        let bankAccount = new BankAccount(balance)
+        it('Final Balance', () => {
+            let b1 = 100;
+            let b2 = -100;
+            let b3 = null;
+            assert.deepStrictEqual(200, bankAccount.append(b1))
+            assert.deepStrictEqual(100, bankAccount.append(b2))
+            assert.deepStrictEqual(100, bankAccount.append(b3))
+        })
+    })
+    describe('Substract Test', () => {
+        let bankAccount = new BankAccount(balance)
+        it('Retired Amount', () => {
+            let b1 = 100;
+            let b2 = -100;
+            let b3 = null;
+            assert.deepStrictEqual(0, bankAccount.substract(b1))
+            assert.deepStrictEqual(100, bankAccount.substract(b2))
+            assert.deepStrictEqual(100, bankAccount.substract(b3))
+        })
+    })
+    describe('Merge Test', () => {
+        let bankAccount1 = new BankAccount(balance)
+        let bankAccount2 = new BankAccount(balance)
+        it('Correct Merge', () => {
+        
+            assert.deepStrictEqual(200, bankAccount1.merge(bankAccount1,bankAccount2))
+        })
+    })
+    describe('History Test', () => {
+        it('Correct History ', () => {
+            let bankAccount = new BankAccount(balance)
+            bankAccount.append(30)
+            bankAccount.append(80)
+            bankAccount.substract(50)
+            assert.deepStrictEqual(["+30","+80","-50"], bankAccount.history())
+        })
+        it('Correct History After Merge', () => {
+            let bankAccount1 = new BankAccount(balance)
+            bankAccount1.append(30)
+            bankAccount1.append(80)
+            bankAccount1.substract(50)
+            let bankAccount2 = new BankAccount(balance)
+            bankAccount2.append(30)
+            bankAccount2.append(80)
+            bankAccount2.substract(50)
+            bankAccount1.merge(bankAccount2)
+            assert.deepStrictEqual(["+30","+80","-50","+30","+80","-50"], bankAccount1.history())
+        })
+
     })
 
 })
