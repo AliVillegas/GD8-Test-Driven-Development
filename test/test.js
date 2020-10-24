@@ -1,7 +1,6 @@
-import VectorCalculator from '../Classes/VectorCalculator'
+// import { VectorCalculator } from '../Classes/VectorCalculator.js'
 const assert = require('assert')
-
-
+const VectorCalculator = require('../Classes/VectorCalculator')
 
 describe(' Tests for VectorCalculator ', () => {
     let vectorCalculator = new VectorCalculator()
